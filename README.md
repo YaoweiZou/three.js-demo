@@ -1,4 +1,6 @@
-# 使用 React 和 Three.js 加载 3d模型
+# 使用 React 和 Three.js 加载 3d 模型
+
+项目中的 gem.gltf 模型文件来自 v3.nuxtjs.org。
 
 Three.js 文档：
 
