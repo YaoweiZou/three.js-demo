@@ -1,0 +1,15 @@
+# dependencies
+node_modules
+
+# production
+dist
+
+# IDE
+.vscode
+.idea
+
+# misc
+.DS_Store
+.cache
+.vercel
+npm-debug.log*

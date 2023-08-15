@@ -1,0 +1,16 @@
+{
+  "name": "three.js-demo",
+  "version": "1.0.0",
+  "description": "Three.js Demo",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "dat.gui": "^0.7.9",
+    "three": "^0.155.0"
+  },
+  "devDependencies": {
+    "vite": "^4.4.9"
+  }
+}
