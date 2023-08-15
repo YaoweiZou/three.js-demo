@@ -1,6 +1,6 @@
 import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 const canvas = document.querySelector("#gem");
 const size = {
@@ -10,12 +10,11 @@ const size = {
 const scene = new THREE.Scene();
 
 const textureLoader = new THREE.TextureLoader();
-const gemTexture = textureLoader.load("/public/gem/roughness.jpeg");
+const gemTexture = textureLoader.load("/gem/roughness.jpeg");
 
-let h = null;
 const loader = new GLTFLoader();
-loader.load("/public/gem/gem.gltf", gltf => {
-  h = gltf.scene.children[6];
+loader.load("/gem/gem.gltf", gltf => {
+  const h = gltf.scene.children[6];
   // h.material.roughnessMap = gemTexture;
   // h.material.displacementScale = 0.15;
   // h.material.emissiveIntensity = 0.4;
@@ -54,7 +53,7 @@ controls.maxPolarAngle = Math.PI / 2;
 // 自动旋转，控制器实例需要调用 update()
 controls.autoRotate = true;
 // 自动旋转速度
-controls.autoRotateSpeed = 5;
+controls.autoRotateSpeed = 8;
 // 是否响应用户操作
 controls.enabled = true;
 // 是否启用水平或垂直旋转
