@@ -1,7 +1,7 @@
+import { GUI } from "dat.gui";
 import {
   AmbientLight,
   AxesHelper,
-  Clock,
   DirectionalLight,
   PCFSoftShadowMap,
   PerspectiveCamera,
@@ -9,11 +9,10 @@ import {
   TextureLoader,
   WebGLRenderer
 } from "three";
+import WebGL from "three/examples/jsm/capabilities/WebGL";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import Stats from "three/examples/jsm/libs/stats.module.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { GUI } from "dat.gui";
-import WebGL from "three/examples/jsm/capabilities/WebGL";
 
 function main() {
   render();
@@ -26,19 +25,16 @@ const size = {
 
 const scene = new Scene();
 
-const textureLoader = new TextureLoader();
-const gemTexture = textureLoader.load("/gem/roughness.jpeg");
-
 const loader = new GLTFLoader();
 loader.load("/gem/gem.gltf", gltf => {
-  const h = gltf.scene.children[6];
-  // h.material.roughnessMap = gemTexture;
-  // h.material.displacementScale = 0.15;
-  // h.material.emissiveIntensity = 0.4;
-  // h.material.refractionRatio = 1;
-  // h.rotation.z = 0;
-  scene.add(h);
+  // gltf.scene.children.forEach(item => {
+  //   console.log(item);
+  // })
   const gem = gltf.scene.children[0];
+  gem.material.roughnessMap = new TextureLoader().load("/gem/roughness.jpeg");
+  gem.material.displacementScale = 0.15;
+  gem.material.emissiveIntensity = 0.4;
+  gem.material.refractionRatio = 1;
   scene.add(gem);
 });
 
@@ -82,7 +78,7 @@ controls.maxPolarAngle = Math.PI / 2;
 // 自动旋转，控制器实例需要调用 update()
 controls.autoRotate = true;
 // 自动旋转速度
-controls.autoRotateSpeed = 8;
+controls.autoRotateSpeed = 7;
 // 是否响应用户操作
 controls.enabled = true;
 // 是否启用水平或垂直旋转
