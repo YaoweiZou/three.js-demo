@@ -19,6 +19,7 @@ pnpm run dev
 - [glTF Viewer](https://gltf-viewer.donmccurdy.com/)
 - [glTF Viewer Source Code - GitHub](https://github.com/donmccurdy/three-gltf-viewer)
 - [glTF Models Download](https://sketchfab.com/models?features=downloadable&sort_by=-likeCount&type=models)
+- [《探索 three.js》](https://discoverthreejs.com/zh/)
 
 感谢 TA 们的奉献。
 
