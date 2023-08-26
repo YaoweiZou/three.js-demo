@@ -1,13 +1,13 @@
 import { GUI } from "dat.gui";
 import {
-  AmbientLight,
-  AxesHelper,
-  DirectionalLight,
-  PCFSoftShadowMap,
-  PerspectiveCamera,
-  Scene,
-  TextureLoader,
-  WebGLRenderer
+    AmbientLight,
+    AxesHelper,
+    DirectionalLight,
+    GridHelper,
+    PerspectiveCamera,
+    Scene,
+    TextureLoader,
+    WebGLRenderer
 } from "three";
 import WebGL from "three/examples/jsm/capabilities/WebGL";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
@@ -21,15 +21,12 @@ camera.position.set(2, 2, 6);
 scene.add(camera);
 
 const renderer = new WebGLRenderer({
-  precision: "highp",
   antialias: true,
   alpha: true
 });
-renderer.setClearColor("#000000", 0);
+renderer.setClearColor(0xFFFFFF);
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
 window.onresize = () => {
@@ -49,15 +46,11 @@ loader.load("/gem/gem.gltf", gltf => {
 });
 
 const ambientLight = new AmbientLight(0xffffff, 2);
-scene.add(ambientLight);
-
 const light1 = new DirectionalLight(0xffffff, 3);
 light1.position.set(1, 1, 1);
-scene.add(light1);
-
 const light2 = new DirectionalLight(0xffffff, 3);
 light2.position.set(-1, -1, -1);
-scene.add(light2);
+scene.add(ambientLight, light1, light2);
 
 let controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(0, 0.75, 0);
@@ -80,8 +73,9 @@ controls.enableRotate = true;
 
 function helper() {
   const axesHelper = new AxesHelper(100);
-  scene.add(axesHelper);
-};
+  const gridHelper = new GridHelper();
+  scene.add(axesHelper, gridHelper);
+}
 helper();
 
 let stats = null;
@@ -96,7 +90,13 @@ function showGUI() {
 
   // Display GUI
   const displayGui = gui.addFolder("Display");
+  displayGui.addColor({ color: 0xFFFFFF }, "color")
+    .onChange(value => renderer.setClearColor(value))
+    .name("背景颜色");
   displayGui.add(controls, "autoRotate").name("自动旋转");
+  displayGui.add(controls, "autoRotateSpeed", 1, 10).step(1).name("自动旋转速度");
+  displayGui.add(controls, "enableDamping").name("阻尼");
+  displayGui.open();
 
   // Light GUI
   const lightGui = gui.addFolder("Light");
@@ -121,7 +121,7 @@ function render() {
   controls.update();
   renderer.render(scene, camera);
   requestAnimationFrame(render);
-};
+}
 
 // WebGL 是否可用
 if (WebGL.isWebGLAvailable()) {
