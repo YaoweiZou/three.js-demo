@@ -1,13 +1,13 @@
 import { GUI } from "dat.gui";
 import {
-    AmbientLight,
-    AxesHelper,
-    DirectionalLight,
-    GridHelper,
-    PerspectiveCamera,
-    Scene,
-    TextureLoader,
-    WebGLRenderer
+  AmbientLight,
+  AxesHelper,
+  DirectionalLight,
+  GridHelper,
+  PerspectiveCamera,
+  Scene,
+  TextureLoader,
+  WebGLRenderer
 } from "three";
 import WebGL from "three/examples/jsm/capabilities/WebGL";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
@@ -21,28 +21,28 @@ camera.position.set(2, 2, 6);
 scene.add(camera);
 
 const renderer = new WebGLRenderer({
-  antialias: true,
-  alpha: true
+    antialias: true,
+    alpha: true
 });
-renderer.setClearColor(0xFFFFFF);
+renderer.setClearColor(0xffffff);
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 document.body.appendChild(renderer.domElement);
 
 window.onresize = () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-}
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+};
 
 const loader = new GLTFLoader();
 loader.load("/gem/gem.gltf", gltf => {
-  const gem = gltf.scene.children[0];
-  gem.material.roughnessMap = new TextureLoader().load("/gem/roughness.jpeg");
-  gem.material.displacementScale = 0.15;
-  gem.material.emissiveIntensity = 0.4;
-  gem.material.refractionRatio = 1;
-  scene.add(gem);
+    const gem = gltf.scene.children[0];
+    gem.material.roughnessMap = new TextureLoader().load("/gem/roughness.jpeg");
+    gem.material.displacementScale = 0.15;
+    gem.material.emissiveIntensity = 0.4;
+    gem.material.refractionRatio = 1;
+    scene.add(gem);
 });
 
 const ambientLight = new AmbientLight(0xffffff, 2);
@@ -72,61 +72,62 @@ controls.enabled = true;
 controls.enableRotate = true;
 
 function helper() {
-  const axesHelper = new AxesHelper(100);
-  const gridHelper = new GridHelper();
-  scene.add(axesHelper, gridHelper);
+    const axesHelper = new AxesHelper(100);
+    const gridHelper = new GridHelper();
+    scene.add(axesHelper, gridHelper);
 }
 helper();
 
 let stats = null;
 
 function showGUI() {
-  if (stats === null) {
-    stats = new Stats();
-    stats.domElement.style.position = "static";
-    [].forEach.call(stats.dom.children, child => (child.style.display = ''));
-  }
-  const gui = new GUI({ width: 260 });
+    if (stats === null) {
+        stats = new Stats();
+        stats.domElement.style.position = "static";
+        [].forEach.call(stats.dom.children, child => (child.style.display = ""));
+    }
+    const gui = new GUI({ width: 260 });
 
-  // Display GUI
-  const displayGui = gui.addFolder("Display");
-  displayGui.addColor({ color: 0xFFFFFF }, "color")
-    .onChange(value => renderer.setClearColor(value))
-    .name("背景颜色");
-  displayGui.add(controls, "autoRotate").name("自动旋转");
-  displayGui.add(controls, "autoRotateSpeed", 1, 10).step(1).name("自动旋转速度");
-  displayGui.add(controls, "enableDamping").name("阻尼");
-  displayGui.open();
+    // Display GUI
+    const displayGui = gui.addFolder("Display");
+    displayGui
+        .addColor({ color: 0xffffff }, "color")
+        .onChange(value => renderer.setClearColor(value))
+        .name("背景颜色");
+    displayGui.add(controls, "autoRotate").name("自动旋转");
+    displayGui.add(controls, "autoRotateSpeed", 1, 10).step(1).name("自动旋转速度");
+    displayGui.add(controls, "enableDamping").name("阻尼");
+    displayGui.open();
 
-  // Light GUI
-  const lightGui = gui.addFolder("Light");
-  lightGui.add(ambientLight, "intensity", 0, 10).step(0.1).name("环境光强度");
+    // Light GUI
+    const lightGui = gui.addFolder("Light");
+    lightGui.add(ambientLight, "intensity", 0, 10).step(0.1).name("环境光强度");
 
-  // Performance GUI
-  const perfGui = gui.addFolder("Performance");
-  const perfLi = document.createElement("li");
-  perfLi.classList.add("gui-stats");
-  perfLi.appendChild(stats.domElement);
-  // TODO remove event listener
-  // perfLi.firstChild.removeEventListener("click", )
-  perfGui.__ul.appendChild(perfLi);
-  perfGui.open();
+    // Performance GUI
+    const perfGui = gui.addFolder("Performance");
+    const perfLi = document.createElement("li");
+    perfLi.classList.add("gui-stats");
+    perfLi.appendChild(stats.domElement);
+    // TODO remove event listener
+    // perfLi.firstChild.removeEventListener("click", )
+    perfGui.__ul.appendChild(perfLi);
+    perfGui.open();
 }
 showGUI();
 
 function render() {
-  if (stats !== null) {
-    stats.update();
-  }
-  controls.update();
-  renderer.render(scene, camera);
-  requestAnimationFrame(render);
+    if (stats !== null) {
+        stats.update();
+    }
+    controls.update();
+    renderer.render(scene, camera);
+    requestAnimationFrame(render);
 }
 
 // WebGL 是否可用
 if (WebGL.isWebGLAvailable()) {
-  render();
+    render();
 } else {
-  const errorMessage = WebGL.getWebGLErrorMessage();
-  document.body.appendChild(errorMessage);
+    const errorMessage = WebGL.getWebGLErrorMessage();
+    document.body.appendChild(errorMessage);
 }
