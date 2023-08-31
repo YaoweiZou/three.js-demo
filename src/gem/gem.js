@@ -1,13 +1,13 @@
 import { GUI } from "dat.gui";
 import {
-  AmbientLight,
-  AxesHelper,
-  DirectionalLight,
-  GridHelper,
-  PerspectiveCamera,
-  Scene,
-  TextureLoader,
-  WebGLRenderer
+    AmbientLight,
+    AxesHelper,
+    DirectionalLight,
+    GridHelper,
+    PerspectiveCamera,
+    Scene,
+    TextureLoader,
+    WebGLRenderer
 } from "three";
 import WebGL from "three/examples/jsm/capabilities/WebGL";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
@@ -52,30 +52,39 @@ const light2 = new DirectionalLight(0xffffff, 3);
 light2.position.set(-1, -1, -1);
 scene.add(ambientLight, light1, light2);
 
-let controls = new OrbitControls(camera, renderer.domElement);
-controls.target.set(0, 0.75, 0);
-controls.enableZoom = false;
-// 是否启用阻尼
-controls.enableDamping = true;
-// 是否启用平移
-controls.enablePan = false;
-// 设为相同值禁止垂直旋转，并保持该值。
-controls.minPolarAngle = Math.PI / 2;
-controls.maxPolarAngle = Math.PI / 2;
-// 自动旋转，控制器实例需要调用 update()
-controls.autoRotate = true;
-// 自动旋转速度
-controls.autoRotateSpeed = 7;
-// 是否响应用户操作
-controls.enabled = true;
-// 是否启用水平或垂直旋转
-controls.enableRotate = true;
+let controls = null;
+
+function controller() {
+    if (controls === null) {
+        controls = new OrbitControls(camera, renderer.domElement);
+    }
+    controls.target.set(0, 0.75, 0);
+    controls.enableZoom = false;
+    // 是否启用阻尼
+    controls.enableDamping = true;
+    // 是否启用平移
+    controls.enablePan = false;
+    // 设为相同值禁止垂直旋转，并保持该值。
+    controls.minPolarAngle = Math.PI / 2;
+    controls.maxPolarAngle = Math.PI / 2;
+    // 自动旋转，控制器实例需要调用 update()
+    controls.autoRotate = true;
+    // 自动旋转速度
+    controls.autoRotateSpeed = 7;
+    // 是否响应用户操作
+    controls.enabled = true;
+    // 是否启用水平或垂直旋转
+    controls.enableRotate = true;
+}
+
+controller();
 
 function helper() {
     const axesHelper = new AxesHelper(100);
     const gridHelper = new GridHelper();
     scene.add(axesHelper, gridHelper);
 }
+
 helper();
 
 let stats = null;
@@ -94,9 +103,11 @@ function showGUI() {
         .addColor({ color: 0xffffff }, "color")
         .onChange(value => renderer.setClearColor(value))
         .name("背景颜色");
-    displayGui.add(controls, "autoRotate").name("自动旋转");
-    displayGui.add(controls, "autoRotateSpeed", 1, 10).step(1).name("自动旋转速度");
-    displayGui.add(controls, "enableDamping").name("阻尼");
+    if (controls !== null) {
+        displayGui.add(controls, "autoRotate").name("自动旋转");
+        displayGui.add(controls, "autoRotateSpeed", 1, 10).step(1).name("自动旋转速度");
+        displayGui.add(controls, "enableDamping").name("阻尼");
+    }
     displayGui.open();
 
     // Light GUI
@@ -108,25 +119,26 @@ function showGUI() {
     const perfLi = document.createElement("li");
     perfLi.classList.add("gui-stats");
     perfLi.appendChild(stats.domElement);
-    // TODO remove event listener
-    // perfLi.firstChild.removeEventListener("click", )
     perfGui.__ul.appendChild(perfLi);
     perfGui.open();
 }
+
 showGUI();
 
-function render() {
+function animate() {
+    if (controls !== null) {
+        controls.update();
+    }
     if (stats !== null) {
         stats.update();
     }
-    controls.update();
     renderer.render(scene, camera);
-    requestAnimationFrame(render);
+    requestAnimationFrame(animate);
 }
 
 // WebGL 是否可用
 if (WebGL.isWebGLAvailable()) {
-    render();
+    animate();
 } else {
     const errorMessage = WebGL.getWebGLErrorMessage();
     document.body.appendChild(errorMessage);
