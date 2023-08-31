@@ -93,7 +93,7 @@ function showGUI() {
     if (stats === null) {
         stats = new Stats();
         stats.domElement.style.position = "static";
-        [].forEach.call(stats.dom.children, child => (child.style.display = ""));
+        [].forEach.call(stats.dom.children, child => child.style.display = "");
     }
     const gui = new GUI({ width: 260 });
 
