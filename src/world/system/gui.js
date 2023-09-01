@@ -2,7 +2,7 @@ import Stats from "three/examples/jsm/libs/stats.module.js";
 import { GUI } from "dat.gui";
 
 function createGUI() {
-    const gui = new GUI({width: 260});
+    const gui = new GUI({ width: 260 });
 
     const stats = new Stats();
     stats.domElement.style.position = "static";
