@@ -97,6 +97,14 @@ function showGUI() {
     }
     const gui = new GUI({ width: 260 });
 
+    // Performance GUI
+    const perfGui = gui.addFolder("Performance");
+    const perfLi = document.createElement("li");
+    perfLi.classList.add("gui-stats");
+    perfLi.appendChild(stats.domElement);
+    perfGui.__ul.appendChild(perfLi);
+    perfGui.open();
+
     // Display GUI
     const displayGui = gui.addFolder("Display");
     displayGui
@@ -113,14 +121,6 @@ function showGUI() {
     // Light GUI
     const lightGui = gui.addFolder("Light");
     lightGui.add(ambientLight, "intensity", 0, 10).step(0.1).name("环境光强度");
-
-    // Performance GUI
-    const perfGui = gui.addFolder("Performance");
-    const perfLi = document.createElement("li");
-    perfLi.classList.add("gui-stats");
-    perfLi.appendChild(stats.domElement);
-    perfGui.__ul.appendChild(perfLi);
-    perfGui.open();
 }
 
 showGUI();

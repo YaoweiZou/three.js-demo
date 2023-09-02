@@ -6,8 +6,8 @@ import Resizer from "./system/Resizer";
 import { createLight } from "./components/light";
 import Loop from "./system/Loop";
 import { createGUI } from "./system/gui";
-import {createControls} from "./system/controls";
-import {createHelper} from "./components/helper";
+import { createControls } from "./system/controls";
+import { createHelper } from "./components/helper";
 
 class World {
     #scene;
@@ -26,13 +26,11 @@ class World {
 //        const resizer = new Resizer(container, this.#camera, this.#renderer);
 //        resizer.onResize = () => this.render();
 
+        const controls = createControls(this.#camera, this.#renderer.domElement);
+
         const { ambientLight, directionalLight } = createLight();
         const cube = createCube();
         const { axesHelper, gridHelper } = createHelper();
-        
-        this.#scene.add(ambientLight, directionalLight, cube, axesHelper, gridHelper);
-
-        const controls = createControls(this.#camera, this.#renderer.domElement);
 
         const gui = createGUI();
         // Display GUI
@@ -47,7 +45,8 @@ class World {
         lightGui.add(ambientLight, "intensity", 0, 10).step(1).name("环境光亮度");
         lightGui.open();
 
-        this.#loop.push(cube, controls, gui);
+        this.#scene.add(ambientLight, directionalLight, cube, axesHelper, gridHelper);
+        this.#loop.push(controls, cube, gui);
     }
 
     render() {

@@ -9,8 +9,8 @@ dependencies:
     specifier: ^0.7.9
     version: 0.7.9
   three:
-    specifier: ^0.155.0
-    version: 0.155.0
+    specifier: ^0.156.0
+    version: 0.156.0
 
 devDependencies:
   vite:
@@ -251,8 +251,8 @@ packages:
       '@esbuild/win32-x64': 0.18.20
     dev: true
 
-  /fsevents@2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+  /fsevents@2.3.3:
+    resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
@@ -283,7 +283,7 @@ packages:
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: true
 
   /source-map-js@1.0.2:
@@ -291,8 +291,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /three@0.155.0:
-    resolution: {integrity: sha512-sNgCYmDijnIqkD/bMfk+1pHg3YzsxW7V2ChpuP6HCQ8NiZr3RufsXQr8M3SSUMjW4hG+sUk7YbyuY0DncaDTJQ==}
+  /three@0.156.0:
+    resolution: {integrity: sha512-r6meetGWDk3aYjDRh6NpKuUkzoPlI3yldDQe2SkwCcqTTB5NZn7vKQBUXyMExvlwZShaLmvAbsVWaFzp1rkk3A==}
     dev: false
 
   /vite@4.4.9:
@@ -327,5 +327,5 @@ packages:
       postcss: 8.4.28
       rollup: 3.28.0
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: true
